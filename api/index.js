@@ -1,10 +1,10 @@
-const express = require('express');
-const mongoose = require('mongoose');
+import express from 'express'
+import mongoose from 'mongoose';
+import dotenv from 'dotenv'
 const app = express(); 
-const dotenv = require('dotenv');
 dotenv.config();
 const PORT = 3000 || process.env.PORT;
-const userRouter = require('./routes/user.route.js')
+import userRouter from './routes/user.route.js'
 mongoose.connect(process.env.MONGO).then(()=>
 {
     console.log('connected to MongoDB!');
