@@ -13,6 +13,6 @@ try{
 }
 catch(error)
 {
-    next(errorHandler(550,'Created by user'));
+    next(error);
 }
 }
