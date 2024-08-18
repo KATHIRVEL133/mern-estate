@@ -19,9 +19,9 @@ app.use('/api/auth',signUpRouter);
 app.use((err,req,res,next)=>{
     const statusCode = err.statusCode||500;
     const message = err.message || 'Internal Server error';
-    res.status(statusCode).json({
-          status:false,
+   return res.status(statusCode).json({
+          success:false,
           statusCode,
-          message
+          message,
     });
 })

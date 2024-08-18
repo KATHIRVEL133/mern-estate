@@ -6,16 +6,16 @@ export const signup =async (req,res,next)=>
 {
 const {username,email,password} = req.body;
 const hasedPassword = bcryptjs.hashSync(password,10);
-const user  = new User({username,email,password:hasedPassword});
+const newUser  = new User({username,email,password:hasedPassword});
 try{
-    await user.save();
+    await newUser.save();
     res.status(201).json("user created successfully");
 }
 catch(error)
 {
     next(error);
 }
-}
+};
 export const signin = async (req,res,next)=>
 {
 const {email,password} = req.body;
@@ -29,7 +29,7 @@ try
     const validPassword = bcryptjs.compareSync(password,foundUser.password);
     if(!validPassword)
     {
-    return next(errorHandler(404,'Invalid credentials'));
+    return next(errorHandler(401,'Invalid credentials'));
     }
     const {password:pass,...rest} = foundUser._doc;
     const token = jwt.sign({id:foundUser._id},process.env.jWT_TOKEN)

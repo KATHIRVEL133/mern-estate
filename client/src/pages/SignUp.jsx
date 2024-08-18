@@ -3,7 +3,7 @@ import {Link,useNavigate} from 'react-router-dom'
 export default function SignUp() {
   const [formData,setFormData] = useState({});
   const [error,setError] = useState(null);
-  const [Loading,setLoading] = useState(false);
+  const [loading,setLoading] = useState(false);
   const navigate = useNavigate();
   const handleChange = (e)=>
   {
@@ -22,20 +22,21 @@ export default function SignUp() {
      body:JSON.stringify(formData),
     });
     const data = await res.json();
-    if(data.success===false)
+    if(data.success === false)
     {
       setLoading(false);
       setError(data.message);
-      return;
+      return ;
     }
-    setLoading(false);
-    setError(null);
-    navigate('/sign-in');
+      setLoading(false);
+      setError(null);
+      navigate('/sign-in');
+    
   }
   catch(error)
   {
     setLoading(false);
-    setError(error);
+    setError(error.message);
   }
   }
   return (
@@ -47,8 +48,8 @@ export default function SignUp() {
         <input type='text' placeholder='username' id='username' className='border rounded-lg p-2' onChange={handleChange}/>
         <input type='email' placeholder='email' id='email' className='border rounded-lg p-2' onChange={handleChange}/>
         <input type='password' placeholder='password' id='password' className='border rounded-lg p-2' onChange={handleChange}/>
-        <button disabled={Loading} className='bg-slate-700 text-white uppercase rounded-lg p-3 hover:opacity-95 disabled:opacity-80'>
-         {Loading?'...loading':'sign up'}
+        <button disabled={loading} className='bg-slate-700 text-white uppercase rounded-lg p-3 hover:opacity-95 disabled:opacity-80'>
+         {loading?'...loading':'sign up'}
         </button>
       </form>
       <div className='flex gap-2 mt-2'>
