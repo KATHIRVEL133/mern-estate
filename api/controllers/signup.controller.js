@@ -33,7 +33,7 @@ try
     }
     const {password:pass,...rest} = foundUser._doc;
     const token = jwt.sign({id:foundUser._id},process.env.jWT_TOKEN)
-    res.cookie('access-token',token,{httpOnly:true}).status(200).json(rest);
+    res.cookie('access_token',token,{httpOnly:true}).status(200).json(rest);
 }
 catch(error)
 {
