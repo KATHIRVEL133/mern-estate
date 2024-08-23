@@ -21,14 +21,14 @@ try
             username:req.body.username,
             email:req.body.email,
             password:req.body.password,
-            photo:req.body.photo,
+            photo:req.body.avatar,
         }
     },{new:true});
     const {password,...rest}=updateUser._doc;
     res.status(200).json(rest);
 }
 catch(error)
-{
+{   console.log(error);
     next(error);
 }
 
