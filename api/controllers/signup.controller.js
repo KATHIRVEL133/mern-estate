@@ -48,16 +48,10 @@ export const google = async (req,res,next)=>
     const user = await User.findOne({email:req.body.email});
     if(user)
     {
-<<<<<<< HEAD
 
         const token = jwt.sign({id:user._id},process.env.jWT_TOKEN)
         const {password:pass,...rest} = user._doc;
         res.cookie('access_token',token,{httpOnly:true}).status(200).json(rest);
-=======
-        const {password:pass,...rest} = user._doc;
-        const token = jwt.sign({id:user._id},process.env.jWT_TOKEN)
-        res.cookie('access-token',token,{httpOnly:true}).status(200).json(rest);
->>>>>>> f75d45f39222d2f27e49f53a07812cb537ee8912
     }
     else
     {
@@ -66,10 +60,7 @@ export const google = async (req,res,next)=>
         const newUser  = new User({username:req.body.name.split(" ").join("").toLowerCase()+Math.random().toString(36).slice(-8),email:req.body.email,password:hasedPassword,avatar:req.body.photo});
         await newUser.save();
         const token = jwt.sign({id:newUser._id},process.env.jWT_TOKEN)
-<<<<<<< HEAD
         const {password:pass,...rest} = newUser._doc;
-=======
->>>>>>> f75d45f39222d2f27e49f53a07812cb537ee8912
         res.cookie('access_token',token,{httpOnly:true}).status(200).json(rest);
     }
     }

@@ -3,11 +3,7 @@ import { useSelector } from "react-redux"
 import { useEffect, useRef, useState } from "react";
 import { app } from "../../firebase";
 import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage'
-<<<<<<< HEAD
 import { updateUserStart,updateUserSuccess,updateUserFailure, deleteUserFailure, deleteUserStart, deleteUserSuccess } from "../redux/user/userSlice";
-=======
-import { updateUserStart,updateUserSuccess,updateUserFailure } from "../redux/user/userSlice";
->>>>>>> f75d45f39222d2f27e49f53a07812cb537ee8912
 import { useDispatch } from "react-redux";
 //firebase storage
 // allow read;
@@ -92,7 +88,6 @@ catch(error)
   updateUserFailure(error.message);
 }
 }
-<<<<<<< HEAD
 const handleDelete = async ()=>
 {
   try
@@ -114,8 +109,6 @@ catch(error)
   dispatch(deleteUserFailure(error.message));
 }
 }
-=======
->>>>>>> f75d45f39222d2f27e49f53a07812cb537ee8912
   return (
     <div className="p-3 max-w-lg mx-auto">
       <p className='text-3xl font-semibold text-center my-8'>
