@@ -5,6 +5,8 @@ import { app } from "../../firebase";
 import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage'
 import { updateUserStart,updateUserSuccess,updateUserFailure, deleteUserFailure, deleteUserStart, deleteUserSuccess, signOutFailure, signOutSuccess, signOutStart } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import CreateListing from "./CreateListing.jsx"
 //firebase storage
 // allow read;
 // allow write: if
@@ -145,6 +147,9 @@ dispatch(signOutFailure(error.message));
         <button disabled={loading} className="bg-slate-700 rounded-lg text-white p-3 uppercase">
           {loading?'Loading...':'update'}
         </button>
+        <Link className="bg-green-700 text-white p-3 text-center uppercase rounded-lg hover:opacity-95" to={'/create-listing'}>
+         Create Listing
+        </Link>
       </form>
       <div className="flex justify-between mt-5">
         <span onClick={handleDelete} className="text-red-500 cursor-pointer">
