@@ -21,6 +21,8 @@ export default function Profile() {
   const [formData,setFormData] = useState({});
   const [updateSuccess,setUpdateSuccess] = useState(false);
   const dispatch = useDispatch();
+  const [showListingsError,setShowListingsError] = useState(null);
+  const [listings,setListings] = useState([]);
   useEffect(()=>{
     if(file)
     {
@@ -130,6 +132,26 @@ catch(error)
 dispatch(signOutFailure(error.message));
 }
 }
+const handleShowListings = async ()=>
+{
+  try
+  {
+  setShowListingsError(null);
+  const res = await fetch(`/api/user/listings/${currentUser._id}`);
+  const data = await res.json();
+  console.log(data);
+  if(data.success===false)
+  {
+    setShowListingsError(data.message);
+    return;
+  }
+  setListings(data);
+  }
+  catch(error)
+  {
+    setShowListingsError(error);
+  }
+}
   return (
     <div className="p-3 max-w-lg mx-auto">
       <p className='text-3xl font-semibold text-center my-8'>
@@ -161,6 +183,43 @@ dispatch(signOutFailure(error.message));
       </div>
       <p className="text-red-700 mt-3">{error?error:""}</p>
       <p className="text-green-700">{updateSuccess?'successfully updated':''}</p>
+      <button onClick={handleShowListings} className="text-green-700 w-full">Show Listings</button>
+      <p className="text-red-700">
+        {showListingsError?showListingsError:''}
+      </p>
+      {
+        listings&&listings.length>0&&
+        <div className="flex flex-col gap-4">
+        <h1 className="font-semibold text-center text-2xl my-5">
+          Your listings
+        </h1>
+        {
+         listings.map((list)=>(
+          <div key={list._id} className="p-3 border rounded-lg flex justify-between items-center">
+           <Link to={`/listing/${list._id}`}>
+           <img src={list.imageUrls[0]} alt="listing image" className="w-20 h-20 object-contain">
+           
+           </img>
+           </Link>
+           <Link to={`/listing/${list._id}`}>
+            <p className="text-slate-700 font-semibold flex-1 hover:underline truncate">
+            {list.name}
+            </p>
+           </Link>
+           <div className="flex flex-col">
+            <button className="text-red-700">
+              DELETE
+            </button>
+            <button className="text-green-700">
+              EDIT
+            </button>
+           </div>
+          </div>
+          
+        ))
+      }
+        </div>
+      }
     </div>
   )
 }
