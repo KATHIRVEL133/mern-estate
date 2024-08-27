@@ -35,3 +35,19 @@ export const updateListing = async (req,res,next)=>
         next(error);
     }
     }
+    export const getListings = async (req,res,next)=>
+    {
+        try
+        {
+        const listing = await Listing.findById(req.params.id);
+        if(!listing)
+        {
+            return next(errorHandler(404,'list is not present here'));
+        }
+        res.status(200).json(listing);
+    }
+    catch(error)
+    {
+        next(error);
+    }
+    }

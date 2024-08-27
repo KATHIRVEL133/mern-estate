@@ -232,9 +232,12 @@ setlistingErrorHandler(error);
             <button onClick={()=> handleListingDelete(list._id)} className="text-red-700">
               DELETE
             </button>
+            <Link to={`/update-listing/${list._id}`}>
             <button className="text-green-700">
               EDIT
             </button>
+            </Link>
+          
            </div>
           </div>
           
