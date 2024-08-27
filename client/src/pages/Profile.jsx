@@ -23,6 +23,7 @@ export default function Profile() {
   const dispatch = useDispatch();
   const [showListingsError,setShowListingsError] = useState(null);
   const [listings,setListings] = useState([]);
+  const [listingError,setlistingErrorHandler] = useState(null);
   useEffect(()=>{
     if(file)
     {
@@ -139,7 +140,6 @@ const handleShowListings = async ()=>
   setShowListingsError(null);
   const res = await fetch(`/api/user/listings/${currentUser._id}`);
   const data = await res.json();
-  console.log(data);
   if(data.success===false)
   {
     setShowListingsError(data.message);
@@ -151,6 +151,28 @@ const handleShowListings = async ()=>
   {
     setShowListingsError(error);
   }
+}
+const handleListingDelete = async (listingId)=>
+{
+try
+{
+setlistingErrorHandler(null);
+const res = await fetch(`/api/listing/delete/${listingId}`,{
+  method:'DELETE',
+}
+);
+const data = await res.json();
+if(data.success===false)
+{
+ setlistingErrorHandler(data.message);
+ return;
+}
+setListings((prev)=>prev.filter((listing)=>listing._id!==listingId));
+}
+catch(error)
+{
+setlistingErrorHandler(error);
+}
 }
   return (
     <div className="p-3 max-w-lg mx-auto">
@@ -207,7 +229,7 @@ const handleShowListings = async ()=>
             </p>
            </Link>
            <div className="flex flex-col">
-            <button className="text-red-700">
+            <button onClick={()=> handleListingDelete(list._id)} className="text-red-700">
               DELETE
             </button>
             <button className="text-green-700">
