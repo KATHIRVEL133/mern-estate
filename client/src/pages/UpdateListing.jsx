@@ -154,7 +154,7 @@ export default function CreateListing() {
       setError(data.message);
       return;
     }
-    navigate(`/listing/${currentUser._id}`);
+    navigate(`/listing/${params.listingId}`);
     }
     catch(error)
     {
