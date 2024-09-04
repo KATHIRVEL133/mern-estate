@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { useLocation,useNavigate } from "react-router-dom";
+import ListingItem from "../components/ListingItem.jsx";
 export default function Search() {
     const location = useLocation();
     const navigate = useNavigate();
@@ -15,7 +16,7 @@ export default function Search() {
     });
     const [loading,setLoading] = useState(false);
     const [listing,setListing] = useState([]);
-    console.log(listing);
+    const [showMore,setShowMore] = useState(false);
     const handleChange = (e)=>
     {
      if(e.target.id==='all'||e.target.id==='rent'||e.target.id==='sale')
@@ -58,8 +59,9 @@ export default function Search() {
         order:orderFromUrl||'desc',
     });
     }
-    const fetchListings = async ()=>
+    const fetchListings = async () =>
     {
+     setShowMore(false);
      setLoading(true);
      const searchQuery = urlParams.toString();
      const res = await fetch(`/api/listing/get/?${searchQuery}`);
@@ -70,9 +72,14 @@ export default function Search() {
         console.log(data.message);
         return;
      }
+     if(data.length>8)
+     {
+        setShowMore(true);
+     }
+    
      setListing(data);
      setLoading(false);
-     console.log(data);
+    
     }
     fetchListings();
 
@@ -90,6 +97,21 @@ export default function Search() {
     urlParams.set('order',sidebardata.order);
     const searchQuery = urlParams.toString();
     navigate(`/search?${searchQuery}`);
+    }
+    const handleShowMore = async ()=>
+    {
+     const numberOfListings = listing.length;
+     const startIndex = numberOfListings;
+     const urlParams = new URLSearchParams(location.search);
+     urlParams.set('startIndex',startIndex);
+     const searchQuery = urlParams.toString();
+     const res = await fetch(`/api/listing/get?${searchQuery}`);
+     const data = await res.json();
+     if(data.length<9)
+     {
+        setShowMore(false);
+     }
+     setListing([...listing,...data]);
     }
   return (
     <div className="flex flex-col md:flex-row">
@@ -176,10 +198,31 @@ export default function Search() {
         </button>
        </form>
       </div>
-      <div>
+      <div className="flex-1">
         <h1 className="font-semibold text-3xl border-b p-3 text-slate-700 mt-5">
             Listing Results
         </h1>
+        <div className="">
+        
+         {
+         !loading&&listing.length==0&&<p className="text-xl text-slate-700">
+             No Listings found
+            </p>
+         }
+         {
+            loading&&(
+                <p className="text-xl text-slate-700 text-center w-full">
+                    Loading....
+                </p>
+            )
+         }
+         {
+            !loading&&listing&&<div className="flex  flex-wrap">{listing.map((list)=>(<ListingItem key={list._id} list={list}/>))}</div>
+         }
+         {
+            showMore && <button onClick={handleShowMore} className="text-green-700 p-7 hover:underline text-center w-full">Show More...</button>
+         }
+        </div>
       </div>
     </div>
   )

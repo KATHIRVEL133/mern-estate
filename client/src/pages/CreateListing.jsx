@@ -22,8 +22,6 @@ export default function CreateListing() {
     parking:false,
     furnished:false,
   });
-  console.log(formData);
- 
   const [uploading,setUploading] = useState(false);
   const [imageUploadError,setImageUploadError] = useState(null);
   const [loading,setLoading] = useState(false);
@@ -139,7 +137,7 @@ export default function CreateListing() {
       setError(data.message);
       return;
     }
-    navigate(`/listing/${currentUser._id}`);
+    navigate(`/listing/${data._id}`);
     }
     catch(error)
     {

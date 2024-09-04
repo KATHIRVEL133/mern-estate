@@ -218,13 +218,13 @@ setlistingErrorHandler(error);
         {
          listings.map((list)=>(
           <div key={list._id} className="p-3 border rounded-lg flex justify-between items-center">
-           <Link to={`/listing/${list._id}`}>
+           <Link to={`/listing/${list._id}`} className="flex items-center gap-2">
            <img src={list.imageUrls[0]} alt="listing image" className="w-20 h-20 object-contain">
            
            </img>
-           </Link>
-           <Link to={`/listing/${list._id}`}>
-            <p className="text-slate-700 font-semibold flex-1 hover:underline truncate">
+           {/* </Link>
+           <Link to={`/listing/${list._id}`}> */}
+            <p className="text-slate-700 flex-1 font-semibold hover:underline truncate">
             {list.name}
             </p>
            </Link>

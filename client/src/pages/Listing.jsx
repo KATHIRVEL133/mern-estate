@@ -86,7 +86,7 @@ useEffect(()=>{
             {
             listing.offer?
             <p  className="bg-green-900 w-full max-w-[200px] text-center text-white p-1 rounded-md">
-             ${+listing.regularPrice-+listing.discountPrice}
+             ${+listing.regularPrice-+listing.discountPrice} discount
             </p>:''
             }
            </div>

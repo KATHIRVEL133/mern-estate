@@ -2,8 +2,9 @@ import {FaSearch} from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation,useNavigate } from 'react-router-dom';
 export default function Header() {
+  const location = useLocation();
   const {currentUser} = useSelector(state => state.user);
   const [searchTerm,setSearchTerm] = useState('');
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ export default function Header() {
         </Link>
         <form onSubmit={handleSubmit} className='bg-slate-100 p-3 rounded-lg flex items-center'>
             <input type='text' placeholder='Search...' value={searchTerm} onChange={(e)=>setSearchTerm(e.target.value)} className='bg-transparent focus:outline-none w-24 sm:w-64' />
-           <button>
+           <button type='submit'>
             <FaSearch className='text-slate-600 cursor-pointer'/>
            </button>
         </form>
