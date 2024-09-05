@@ -76,7 +76,6 @@ export default function Search() {
      {
         setShowMore(true);
      }
-    
      setListing(data);
      setLoading(false);
     
