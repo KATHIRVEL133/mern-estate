@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import {Link,useNavigate} from 'react-router-dom'
 import {useDispatch,useSelector} from 'react-redux'
-import { signInStart,signInSuccess,signInFailure } from '../redux/user/userSlice';
+import { signInStart,signInSuccess,signInFailure } from '../redux/user/userSlice.js';
 import OAuth from '../components/OAuth';
 export default function SignIn() {
   const [formData,setFormData] = useState({});
@@ -30,7 +30,7 @@ export default function SignIn() {
       dispatch(signInFailure(data.message))
       return;
     }
-    dispatch(signInSuccess(data))
+    dispatch(signInSuccess(data));
     navigate('/');
   }
   catch(error)
@@ -46,7 +46,7 @@ export default function SignIn() {
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <input type='email' placeholder='email' id='email' className='border rounded-lg p-2' onChange={handleChange}/>
         <input type='password' placeholder='password' id='password' className='border rounded-lg p-2' onChange={handleChange}/>
-        <button disabled={loading} className='bg-slate-700 text-white uppercase rounded-lg p-3 hover:opacity-95 disabled:opacity-80'>
+        <button  disabled={loading} className='bg-slate-700 text-white uppercase rounded-lg p-3 hover:opacity-95 disabled:opacity-80'>
          {loading?'...loading':'sign In'}
         </button>
         <OAuth/>

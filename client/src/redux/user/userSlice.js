@@ -23,7 +23,6 @@ const userSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
-
         updateUserStart : (state)=>
         {
             state.loading=true;
